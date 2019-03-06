@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" targetNamespace="http://AS_FTLWrapper_TIBCO/xslt/Map_FTLWrapper_Request" version="8.0.4.0" xmlns:map="http://AS_FTLWrapper_TIBCO/xslt/Map_FTLWrapper_Request">
+    <input correlationContext="{http://Tibco_Lib}FTLWrapperBO" message="{http://Tibco_Lib/PutMessageFTLWrapper}putMessageRequestMsg" sharedContext="" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <output correlationContext="{http://Tibco_Lib}FTLWrapperBO" message="{http://AS_FTLWrapper_TIBCO/FTLWrapperInterface}putRequestMsg" sharedContext="" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in2" uri="http://Tibco_Lib/PutMessageFTLWrapper"/>
+        <namespace kind="supplement" prefix="io5" uri="http://Tibco_Lib"/>
+        <namespace kind="supplement" prefix="io4" uri="http://www.w3.org/2003/05/soap-envelope"/>
+        <namespace kind="supplement" prefix="io3" uri="http://www.ibm.com/xmlns/prod/websphere/mq/sca/6.0.0"/>
+        <namespace kind="supplement" prefix="io2" uri="http://www.ibm.com/websphere/sibx/smo/v6.0.1"/>
+        <namespace kind="supplement" prefix="io6" uri="http://www.ibm.com/xmlns/prod/websphere/http/sca/6.1.0"/>
+        <namespace kind="supplement" prefix="io7" uri="http://www.w3.org/2005/08/addressing"/>
+        <namespace kind="supplement" prefix="in" uri="wsdl.http://Tibco_Lib/PutMessageFTLWrapper"/>
+        <namespace kind="supplement" prefix="io" uri="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+        <namespace kind="supplement" prefix="out2" uri="wsdl.http://AS_FTLWrapper_TIBCO/FTLWrapperInterface"/>
+        <namespace kind="supplement" prefix="out" uri="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface"/>
+        <namespace kind="supplement" prefix="out3" uri="http://AS_FTLWrapper_TIBCO"/>
+    </namespaces>
+    <generation engine="xslt2"/>
+    <mappingDeclaration name="Map_FTLWrapper_Request">
+        <input namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <output namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <move>
+            <input path="body/putMessage/inputFTL/correlationId"/>
+            <output path="context/correlation/correlationId"/>
+        </move>
+        <foreach>
+            <input path="headers/properties"/>
+            <output path="headers/HTTPHeader/header"/>
+            <move>
+                <input path="name"/>
+                <output path="name"/>
+            </move>
+            <move>
+                <input path="value"/>
+                <output path="value"/>
+            </move>
+        </foreach>
+        <move>
+            <input path="headers/SMOHeader"/>
+            <output path="headers/SMOHeader"/>
+        </move>
+        <move>
+            <input path="body/putMessage/inputFTL/payload"/>
+            <output path="body/put/request/payload"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

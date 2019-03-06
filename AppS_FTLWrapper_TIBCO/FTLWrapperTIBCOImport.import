@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scdl:import xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:configuration_6.1.0="http://www.ibm.com/xmlns/prod/websphere/j2ca/configuration/6.1.0" xmlns:http="http://www.ibm.com/xmlns/prod/websphere/scdl/http/6.1.0" xmlns:ns1="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface" xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" xmlns:wsdl="http://www.ibm.com/xmlns/prod/websphere/scdl/wsdl/6.0.0" displayName="FTLWrapperTIBCOImport" name="FTLWrapperTIBCOImport">
+  <interfaces>
+    <interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="sync" portType="ns1:FTLWrapperInterface">
+      <scdl:interfaceQualifier xsi:type="scdl:JoinTransaction" value="false"/>
+    </interface>
+  </interfaces>
+  <esbBinding xsi:type="http:HTTPImportBinding" defaultDataBinding="com.ibm.telcopack.datahandler.FTLXMLHandler">
+    <importInteraction endpointURL="http://10.90.101.4:15086/FTLWrapper" httpMethod="POST">
+      <requestMediaType>text/plain</requestMediaType>
+    </importInteraction>
+    <methodBinding method="put">
+      <importInteraction endpointURL="http://10.90.101.4:15086/FTLWrapper" httpMethod="POST">
+        <requestMediaType>text/plain</requestMediaType>
+      </importInteraction>
+    </methodBinding>
+  </esbBinding>
+</scdl:import>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mediationFlow xmlns="http://www.ibm.com/xmlns/prod/websphere/2010/MediationFlow" xmlns:FTLWrapperInterface="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface" xmlns:PutMessageFTLWrapper="http://Tibco_Lib/PutMessageFTLWrapper" xmlns:XMLSchema="http://www.w3.org/2001/XMLSchema" name="FTLWrapperMED" targetNamespace="http://AS_FTLWrapper_TIBCO">
+  <import location="PutMessageFTLWrapper.wsdl" namespace="http://Tibco_Lib/PutMessageFTLWrapper"/>
+  <import location="FTLWrapperInterface.wsdl" namespace="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface"/>
+  <promotedProperty name="ServiceInvoke1.retryOn" group="AS_FTLWrapper_TIBCO.FTLWrapperMED" value="0"/>
+  <promotedProperty name="ServiceInvoke1.retryCount" group="AS_FTLWrapper_TIBCO.FTLWrapperMED" value="0"/>
+  <promotedProperty name="ServiceInvoke1.retryDelay" group="AS_FTLWrapper_TIBCO.FTLWrapperMED" value="0"/>
+  <reference name="FTLWrapperInterfacePartner" portType="FTLWrapperInterface:FTLWrapperInterface"/>
+  <interface portType="PutMessageFTLWrapper:PutMessageFTLWrapper">
+    <operation name="putMessage">
+      <requestFlow>
+        <node displayName="putMessage : PutMessageFTLWrapper" name="PutMessageFTLWrapper_putMessage_Input" type="Input">
+          <property name="correlationContext" value="{http://Tibco_Lib}FTLWrapperBO"/>
+          <outputTerminal type="PutMessageFTLWrapper:putMessageRequestMsg">
+            <wire targetNode="HTTPHeaderSetterFTL"/>
+          </outputTerminal>
+        </node>
+        <node name="Log_FTLWrapper_Request" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ 
+LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+try{
+	keys.put("CorrelationId_T", smo.getString("/context/correlation/correlationId"));
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("***** Log Request for FTL Wrapper *****");
+
+// log the request
+BPMCustomLogger.log(smo, keys);
+ 
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal
+]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1519481926069"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="java.util.LinkedHashMap;com.ibm.bpm.custom.logging.BPMCustomLogger"/>
+          <inputTerminal type="FTLWrapperInterface:putRequestMsg"/>
+          <outputTerminal type="FTLWrapperInterface:putRequestMsg">
+            <wire targetNode="Invoke_FTL_Wrapper"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="HTTPHeaderSetterFTL" type="HTTPHeaderSetter">
+          <table name="headerElements">
+            <row>
+              <property name="mode" value="Create"/>
+              <property name="headerName" value="TargetService"/>
+              <property name="valueIsXPath" value="true"/>
+              <property name="value" value="/body/putMessage/inputFTL/targetService"/>
+            </row>
+            <row>
+              <property name="mode" value="Create"/>
+              <property name="headerName" value="TargetXSD"/>
+              <property name="valueIsXPath" value="true"/>
+              <property name="value" value="/body/putMessage/inputFTL/targetXSD"/>
+            </row>
+            <row>
+              <property name="mode" value="Create"/>
+              <property name="headerName" value="FTLEndpoint"/>
+              <property name="valueIsXPath" value="true"/>
+              <property name="value" value="/body/putMessage/inputFTL/FTLEndpoint"/>
+            </row>
+          </table>
+          <inputTerminal/>
+          <outputTerminal>
+            <wire targetNode="Map_FTLWrapper_Request"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="Map_FTLWrapper_Request" type="XSLTransformation">
+          <property name="root" value="/"/>
+          <property name="XSLTransform" value="xslt/Map_FTLWrapper_Request.xsl"/>
+          <property name="XMXMap" value="xslt/Map_FTLWrapper_Request.map"/>
+          <property name="SMOVersion" value="SMO61"/>
+          <inputTerminal type="PutMessageFTLWrapper:putMessageRequestMsg"/>
+          <outputTerminal type="FTLWrapperInterface:putRequestMsg">
+            <wire targetNode="Log_FTLWrapper_Request"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Map_Failure"/>
+          </failTerminal>
+        </node>
+        <node name="Invoke_FTL_Wrapper" type="ServiceInvoke">
+          <property name="referenceName" value="FTLWrapperInterfacePartner"/>
+          <property name="operationName" value="put"/>
+          <property name="invocationStyle" value="6"/>
+          <property name="retryOn" promotedPropertyGroup="AS_FTLWrapper_TIBCO.FTLWrapperMED" promotedPropertyName="ServiceInvoke1.retryOn"/>
+          <property name="retryCount" promotedPropertyGroup="AS_FTLWrapper_TIBCO.FTLWrapperMED" promotedPropertyName="ServiceInvoke1.retryCount"/>
+          <property name="retryDelay" promotedPropertyGroup="AS_FTLWrapper_TIBCO.FTLWrapperMED" promotedPropertyName="ServiceInvoke1.retryDelay"/>
+          <inputTerminal type="FTLWrapperInterface:putRequestMsg"/>
+          <outputTerminal type="FTLWrapperInterface:putResponseMsg">
+            <wire targetNode="Log_FTLWrapper_Response"/>
+          </outputTerminal>
+          <outputTerminal name="timeout" type="FTLWrapperInterface:putRequestMsg">
+            <wire targetNode="Log_FTLWrapper_Error"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_FTLWrapper_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_FTLWrapper_Response" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+
+LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+try{
+	keys.put("CorrelationId_T", smo.getString("/context/correlation/correlationId"));
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("***** Log Response from FTL Wrapper *****");
+
+// log the response
+BPMCustomLogger.log(smo, keys); 
+  
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1519483106781"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="java.util.LinkedHashMap;com.ibm.bpm.custom.logging.BPMCustomLogger"/>
+          <inputTerminal/>
+          <outputTerminal>
+            <wire targetNode="Stop"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="Stop" type="Stop">
+          <inputTerminal/>
+        </node>
+        <node name="Log_FTLWrapper_Error" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ 
+ 
+LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+try{
+	keys.put("CorrelationId_T", smo.getString("/context/correlation/correlationId"));
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("***** FTL Wrapper Error ::"+keys+" "+TPConstants.AS_TIMEOUT_FAIL_TIBCO);
+
+// log the response
+BPMCustomLogger.log(smo, keys);
+ 
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal
+]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1519483688299"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="java.util.LinkedHashMap;com.ibm.bpm.custom.logging.BPMCustomLogger;com.ibm.bpm.custom.utils.TPConstants"/>
+          <inputTerminal/>
+          <outputTerminal>
+            <wire targetNode="Fail"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="Fail" type="Fail">
+          <inputTerminal/>
+        </node>
+        <node name="Log_Map_Failure" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ 
+LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+try{
+	keys.put("CorrelationId :: ", smo.getString("/context/correlation/correlationId"));
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("***** Mapping failure at Access Service layer *****"+keys+"  "+TPConstants.BOMAP_XSLT_FAIL);
+ 
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1519484063929"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="java.util.LinkedHashMap;com.ibm.bpm.custom.logging.BPMCustomLogger;com.ibm.bpm.custom.utils.TPConstants"/>
+          <inputTerminal/>
+          <outputTerminal>
+            <wire targetNode="Fail2"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node displayName="Fail" name="Fail2" type="Fail">
+          <inputTerminal/>
+        </node>
+      </requestFlow>
+      <errorFlow>
+        <node displayName="putMessage : PutMessageFTLWrapper" name="PutMessageFTLWrapper_putMessage_ErrorInput" type="ErrorInput">
+          <outputTerminal name="catchAll" type="XMLSchema:anyType"/>
+        </node>
+      </errorFlow>
+    </operation>
+  </interface>
+</mediationFlow>

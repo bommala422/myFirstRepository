@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="FTLWrapperInterface" targetNamespace="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface" xmlns:bons1="http://AS_FTLWrapper_TIBCO" xmlns:tns="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://AS_FTLWrapper_TIBCO/FTLWrapperInterface">
+      <xsd:import namespace="http://AS_FTLWrapper_TIBCO" schemaLocation="ResponseDO.xsd"/>
+      <xsd:import namespace="http://AS_FTLWrapper_TIBCO" schemaLocation="RequestDO.xsd"/>
+      <xsd:element name="put">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="request" nillable="true" type="bons1:RequestDO"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="putResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="response" nillable="true" type="bons1:ResponseDO"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+    <wsdl:message name="putRequestMsg">
+    <wsdl:part element="tns:put" name="putParameters"/>
+  </wsdl:message>
+    <wsdl:message name="putResponseMsg">
+    <wsdl:part element="tns:putResponse" name="putResult"/>
+  </wsdl:message>
+    <wsdl:portType name="FTLWrapperInterface">
+    <wsdl:operation name="put">
+      <wsdl:input message="tns:putRequestMsg" name="putRequest"/>
+      <wsdl:output message="tns:putResponseMsg" name="putResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
