@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp:Policy xmlns:wsrr="http://www.ibm.com/xmlns/prod/serviceregistry/6/2/wspolicy" xmlns:sibx="http://www.ibm.com/wbi/mediation/200812/AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsrr:policyClass="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED_CLASS" wsu:Id="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED_DefaultPolicy" wsrr:policyClassDomain="http://www.ibm.com/wbi/mediation/200812/AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED">
+  <sibx:ServiceInvoke1.retryDelay
+      value="0">
+  </sibx:ServiceInvoke1.retryDelay>
+  <sibx:ServiceInvoke1.retryOn
+      value="0">
+  </sibx:ServiceInvoke1.retryOn>
+  <sibx:ServiceInvoke1.retryCount
+      value="0">
+  </sibx:ServiceInvoke1.retryCount>
+</wsp:Policy>

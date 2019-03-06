@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sibxscaresources:SCAModule xmlns:sibxscaresources="http://www.ibm.com/websphere/appserver/schemas/6.0/sibxscaresources.xmi" identifier="AppS_NotifyCustomerOrderStatus_OM">
+  <sCAModuleProperty identifier="ServiceInvoke1.retryOn" value="0" type="STRING" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryCount" value="0" type="INTEGER" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryDelay" value="0" type="INTEGER" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryOn" value="0" type="STRING" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryCount" value="0" type="INTEGER" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryDelay" value="0" type="INTEGER" group="AppS_NotifyCustomerOrderStatus_OM.NotifyCustomerOrderTibcoMED"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryOn" value="0" type="STRING" group="AccessService_Sterling_CustomerOrderManagement.TestNCOS"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryCount" value="0" type="INTEGER" group="AccessService_Sterling_CustomerOrderManagement.TestNCOS"/>
+  <sCAModuleProperty identifier="ServiceInvoke1.retryDelay" value="0" type="INTEGER" group="AccessService_Sterling_CustomerOrderManagement.TestNCOS"/>
+</sibxscaresources:SCAModule>
