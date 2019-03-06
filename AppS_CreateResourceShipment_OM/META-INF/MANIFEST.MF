@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Class-Path: copiedjars/TelcoPackUtils/lib/commons-codec-1.9.jar 
+ copiedjars/TelcoPackUtils/lib/httpcore-4.4.4.jar 
+ copiedjars/TelcoPackUtils/lib/httpclient-cache-4.5.2.jar 
+ copiedjars/TelcoPackUtils/lib/wink-client-1.4.jar 
+ copiedjars/TelcoPackUtils/lib/jackson-core-2.4.3.jar 
+ copiedjars/TelcoPackUtils/lib/jackson-databind-2.4.3.jar 
+ copiedjars/BPMCustomLogger/log4j-1.2.16.jar 
+ copiedjars/TelcoPackUtils/lib/wink-1.4.jar 
+ copiedjars/TelcoPackUtils/lib/slf4j-simple-1.6.1.jar 
+ copiedjars/TelcoPackUtils/lib/was_dependencies.jar 
+ copiedjars/TelcoPackUtils/lib/json-simple-1.1.1.jar 
+ copiedjars/TelcoPackUtils/lib/httpclient-4.5.2.jar 
+ copiedjars/TelcoPackUtils/lib/commons-lang-2.3.jar 
+ copiedjars/TelcoPackUtils/lib/wink-common-1.4.jar 
+ copiedjars/TelcoPackUtils/lib/httpmime-4.5.2.jar 
+ copiedjars/TelcoPackUtils/lib/jackson-annotations-2.4.3.jar 
+ copiedjars/TelcoPackUtils/lib/json-20160810.jar 
+ copiedjars/TelcoPackUtils/lib/commons-logging-1.1.1.jar 
+ copiedjars/TelcoPackUtils/lib/slf4j-api-1.6.1.jar
+Created-By: 1.5.0 (IBM Corporation)
+

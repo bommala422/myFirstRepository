@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scdl:export xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:EIS="http://www.ibm.com/xmlns/prod/websphere/scdl/eis/6.0.0" xmlns:ns1="http://BS_CreateResourceShipment/GetCreateResourceShipmentFromQ" xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" xmlns:wsdl="http://www.ibm.com/xmlns/prod/websphere/scdl/wsdl/6.0.0" displayName="AppS_CreateResourceShipmentExport_JMS" name="AppS_CreateResourceShipmentExport_JMS" target="JMSToOMSPayload">
+  <description>This JMS export is consumed by the OMS service, to pass the CreateResourceShipment data from Queue(OUT_Create_ResourceShipment_Local_Q) to this AppS service.</description>
+  <interfaces>
+    <interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="async" portType="ns1:CreateResourceShipmentFromQ"/>
+  </interfaces>
+  <esbBinding xsi:type="EIS:JMSExportBinding" dataBindingType="com.ibm.telcopack.datahandler.TextDataHandler" preferredOutputMessageType="TextMessage">
+    <resourceAdapter type="com.ibm.ws.sib.api.jmsra.impl.JmsJcaResourceAdapterImpl"/>
+    <connection target="jms/OUT_Create_ResourceShipment_Local_Q_AS" type="com.ibm.ws.sib.api.jmsra.impl.JmsJcaActivationSpecImpl" listenerType="javax.jms.MessageListener" selectorType="com.ibm.wbiserver.functionselector.ConstantFunctionSelector">
+      <properties>
+        <DestinationType>javax.jms.Queue</DestinationType>
+      </properties>
+      <authentication resAuthAlias="DeAdminAlias"/>
+    </connection>
+    <methodBinding method="createResourceShipmentFromQ" nativeMethod="createResourceShipmentFromQ"/>
+    <destination implType="com.ibm.ws.sib.api.jms.impl.JmsQueueImpl" target="jms/OUT_Create_ResourceShipment_Local_Q" type="javax.jms.Queue" usage="receive"/>
+  </esbBinding>
+</scdl:export>

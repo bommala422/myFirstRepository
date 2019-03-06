@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="CreateResourceShipmentOMSInt" targetNamespace="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt" xmlns:bons1="http://www.sterlingcommerce.com/documentation" xmlns:tns="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt">
+            <xsd:import namespace="http://www.sterlingcommerce.com/documentation" schemaLocation="Shipping_Request_v1.1.xsd"/>
+      <xsd:element name="CreateResourceShipmentOMS">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="CreateResourceShipmentOMSReq" nillable="true" type="bons1:ShipmentXSDType"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+    <wsdl:message name="CreateResourceShipmentOMSRequestMsg">
+    <wsdl:part element="tns:CreateResourceShipmentOMS" name="CreateResourceShipmentOMSParameters"/>
+  </wsdl:message>
+    <wsdl:portType name="CreateResourceShipmentOMSInt">
+    <wsdl:operation name="CreateResourceShipmentOMS">
+      <wsdl:input message="tns:CreateResourceShipmentOMSRequestMsg" name="CreateResourceShipmentOMSRequest"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

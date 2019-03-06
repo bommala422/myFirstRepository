@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="GetCreateResourceShipmentFromQ" targetNamespace="http://BS_CreateResourceShipment/GetCreateResourceShipmentFromQ" xmlns:tns="http://BS_CreateResourceShipment/GetCreateResourceShipmentFromQ" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+    <xsd:schema targetNamespace="http://BS_CreateResourceShipment/GetCreateResourceShipmentFromQ">
+      <xsd:element name="createResourceShipmentFromQ">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="createResourceShipmentFromQReq" nillable="true" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+    <wsdl:message name="createResourceShipmentFromQRequestMsg">
+    <wsdl:part element="tns:createResourceShipmentFromQ" name="createResourceShipmentFromQParameters"/>
+  </wsdl:message>
+    <wsdl:portType name="CreateResourceShipmentFromQ">
+    <wsdl:operation name="createResourceShipmentFromQ">
+      <wsdl:input message="tns:createResourceShipmentFromQRequestMsg" name="createResourceShipmentFromQRequest"/>
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

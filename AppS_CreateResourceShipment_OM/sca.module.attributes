@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scdl:moduleAndLibraryAttributes xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" versionValue="" versionProvider="" asyncRetryCount="0">
+  <boImplementation>
+    <xci/>
+  </boImplementation>
+  <scdl:libraryDependency name="Sterling_Library" version=""/>
+  <scdl:libraryDependency name="Tibco_Lib" version=""/>
+  <scdl:libraryDependency name="TP_Assurance_Extensions_Library" version=""/>
+  <scdl:libraryDependency name="TP_Billing_Extensions_Library" version=""/>
+  <scdl:libraryDependency name="TP_Common_Extensions_Library" version=""/>
+  <scdl:libraryDependency name="TP_Common_Library" version=""/>
+  <scdl:libraryDependency name="TP_CRM_AIS_Library" version=""/>
+  <scdl:libraryDependency name="TP_Fulfillment_Extensions_Library" version=""/>
+  <scdl:libraryDependency name="TP_Message_Model_Library" version=""/>
+  <scdl:libraryDependency name="TP_RMO_AIS_Library" version=""/>
+  <scdl:libraryDependency name="TP_SMO_AIS_Library" version=""/>
+  <scdl:libraryDependency name="TP_Supplier_Partner_AIS_Library" version=""/>
+  <scdl:libraryDependency name="TP_System_View_Library" version=""/>
+</scdl:moduleAndLibraryAttributes>

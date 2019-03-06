@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mediationFlow xmlns="http://www.ibm.com/xmlns/prod/websphere/2010/MediationFlow" xmlns:CreateResourceShipment="http://TPRMOAI/AIS/CreateResourceShipment" xmlns:CreateResourceShipmentOMSInt="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt" xmlns:XMLSchema="http://www.w3.org/2001/XMLSchema" name="CreateResourceShipmentOMSMed" targetNamespace="http://BS_CreateResourceShipment">
+  <import location="CreateResourceShipmentOMSInt.wsdl" namespace="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt"/>
+  <import location="CreateResourceShipment.wsdl" namespace="http://TPRMOAI/AIS/CreateResourceShipment"/>
+  <promotedProperty name="ServiceInvoke1.retryOn" group="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" value="1"/>
+  <promotedProperty name="ServiceInvoke1.retryCount" group="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" value="3"/>
+  <promotedProperty name="ServiceInvoke1.retryDelay" group="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" value="5"/>
+  <reference name="CreateResourceShipmentPartner" portType="CreateResourceShipment:CreateResourceShipment"/>
+  <interface portType="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSInt">
+    <operation name="CreateResourceShipmentOMS">
+      <requestFlow>
+        <node displayName="CreateResourceShipmentOMS : CreateResourceShipmentOMSInt" name="CreateResourceShipmentOMSInt_CreateResourceShipmentOMS_Input" type="Input">
+          <property name="sharedContext" value="{http://AppS_CreateResourceShipment_OM}SharedContextBO"/>
+          <outputTerminal type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="MsgSet_ToShared"/>
+          </outputTerminal>
+        </node>
+        <node name="Flow_Stop" type="Stop">
+          <inputTerminal/>
+        </node>
+        <node name="Log_OMSReqPayload" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Request Received from OMS");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal
+]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516786282194"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="Map_RequestToBS"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="MsgSet_ToShared" type="MessageElementSetter">
+          <table name="messageElements">
+            <row>
+              <property name="target" value="/context/shared/OrderHeaderKey"/>
+              <property name="type" value="copy"/>
+              <property name="value" value="/body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@OrderHeaderKey"/>
+            </row>
+          </table>
+          <inputTerminal/>
+          <outputTerminal>
+            <wire targetNode="Log_OMSReqPayload"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="Map_RequestToBS" type="XSLTransformation">
+          <property name="root" value="/"/>
+          <property name="XSLTransform" value="xslt/Map_RequestToBS.xsl"/>
+          <property name="XMXMap" value="xslt/Map_RequestToBS.map"/>
+          <property name="SMOVersion" value="SMO61"/>
+          <inputTerminal type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg"/>
+          <outputTerminal type="CreateResourceShipment:invokeMsg">
+            <wire targetNode="Log_TPRequestPayload"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_TPRequestPayload" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+  LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Request Sending to TP BS Service");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal
+]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516788312561"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipment:invokeMsg">
+            <wire targetNode="BSServiceInvoke"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="BSServiceInvoke" type="ServiceInvoke">
+          <property name="referenceName" value="CreateResourceShipmentPartner"/>
+          <property name="operationName" value="invoke"/>
+          <property name="invocationStyle" value="1"/>
+          <property name="retryOn" promotedPropertyGroup="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" promotedPropertyName="ServiceInvoke1.retryOn"/>
+          <property name="retryCount" promotedPropertyGroup="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" promotedPropertyName="ServiceInvoke1.retryCount"/>
+          <property name="retryDelay" promotedPropertyGroup="AppS_CreateResourceShipment_OM.CreateResourceShipmentOMSMed" promotedPropertyName="ServiceInvoke1.retryDelay"/>
+          <inputTerminal type="CreateResourceShipment:invokeMsg"/>
+          <outputTerminal type="CreateResourceShipment:invokeResponseMsg">
+            <wire targetNode="Log_BSServiceResponse"/>
+          </outputTerminal>
+          <outputTerminal name="timeout" type="CreateResourceShipment:invokeMsg">
+            <wire targetNode="Log_BS_TimeOutErr"/>
+          </outputTerminal>
+          <outputTerminal description="Propagates the modeled fault message, received from the service invocation. There is no failInfo data associated with a modeled fault." name="invokeFault1Msg" type="CreateResourceShipment:invokeFault1Msg">
+            <wire targetNode="Log_TPBS_Error"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_BS_TimeOutErr"/>
+          </failTerminal>
+        </node>
+        <node name="Log_BSServiceResponse" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Response Received from TP BS Service");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516788473630"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="Flow_Stop"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_BS_TimeOutErr" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+out.fire(ExceptionHelper.processUndefinedError(smo, out, TPConstants.AppS_TIMEOUT_FAIL, smo.getString("/context/shared/OrderHeaderKey"))); // propagate the service message object to the primitive that is wired to the 'out' terminal
+]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516788841066"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.utils.TPConstants;com.ibm.bpm.custom.utils.ExceptionHelper"/>
+          <inputTerminal/>
+          <outputTerminal type="CreateResourceShipment:invokeFault1Msg">
+            <wire targetNode="Map_TimeOut_Err"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Map_TimeOut_Err" type="XSLTransformation">
+          <property name="root" value="/"/>
+          <property name="XSLTransform" value="xslt/Map_TimeOut_Err.xsl"/>
+          <property name="XMXMap" value="xslt/Map_TimeOut_Err.map"/>
+          <property name="SMOVersion" value="SMO61"/>
+          <inputTerminal type="CreateResourceShipment:invokeFault1Msg"/>
+          <outputTerminal type="CreateResourceShipment:invokeFault1Msg">
+            <wire targetNode="Log_ErrorMsg"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_ErrorMsg" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Logging BS_TimeOut_Error message");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516789093924"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="Flow_Stop"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_TPBS_Error" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Logging BS_TimeOut_Error message");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516789194357"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="Flow_Stop"/>
+          </outputTerminal>
+          <failTerminal>
+            <wire targetNode="Log_Internal_Error"/>
+          </failTerminal>
+        </node>
+        <node name="Log_Internal_Error" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+out.fire(ExceptionHelper.processUndefinedError(smo, out, TPConstants.BOMAP_XSLT_FAIL, smo.getString("/context/shared/OrderHeaderKey"))); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516789710078"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.utils.TPConstants;com.ibm.bpm.custom.utils.ExceptionHelper"/>
+          <inputTerminal type="XMLSchema:anyType"/>
+          <outputTerminal type="CreateResourceShipment:invokeFault1Msg">
+            <wire targetNode="BOMap_InternalErr"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="BOMap_InternalErr" type="BOMapper">
+          <property name="root" value="/"/>
+          <property name="mappingFile" value="BOMap_InternalErr.map"/>
+          <inputTerminal type="CreateResourceShipment:invokeFault1Msg"/>
+          <outputTerminal type="CreateResourceShipment:invokeFault1Msg">
+            <wire targetNode="Log_InternalError_Payload"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+        <node name="Log_InternalError_Payload" type="CustomMediation">
+          <property name="javaCode"><![CDATA[
+ LinkedHashMap<String,String> keys = new LinkedHashMap<String,String>();
+ String correlationID = smo.getString("/context/shared/OrderHeaderKey");
+ 
+try{
+	keys.put("CorrelationId", correlationID);
+}
+catch(Exception e){
+	BPMCustomLogger.logError("Error when getting key values from SMO in Log Entry, " + e.getMessage());
+}
+
+BPMCustomLogger.logInfo("AppS_CreateResourceShipment_OM", "CreateResourceShipmentOMSMed", "Response Received from TP BS Service");
+
+BPMCustomLogger.log(smo, keys);
+out.fire(smo); // propagate the service message object to the primitive that is wired to the 'out' terminal]]></property>
+          <property name="javaClass" value="sca.component.mediation.java.Custom1516790177087"/>
+          <property name="version" value="6.1.0"/>
+          <property name="javaImports" value="com.ibm.bpm.custom.logging.BPMCustomLogger;java.util.LinkedHashMap"/>
+          <inputTerminal/>
+          <outputTerminal explicitType="false" type="CreateResourceShipmentOMSInt:CreateResourceShipmentOMSRequestMsg">
+            <wire targetNode="Flow_Stop"/>
+          </outputTerminal>
+          <failTerminal/>
+        </node>
+      </requestFlow>
+      <errorFlow>
+        <node displayName="CreateResourceShipmentOMS : CreateResourceShipmentOMSInt" name="CreateResourceShipmentOMSInt_CreateResourceShipmentOMS_ErrorInput" type="ErrorInput">
+          <outputTerminal name="catchAll" type="XMLSchema:anyType"/>
+        </node>
+      </errorFlow>
+    </operation>
+  </interface>
+</mediationFlow>

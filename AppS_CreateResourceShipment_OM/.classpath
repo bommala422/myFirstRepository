@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="gen/|gen/src/" kind="src" path=""/>
+	<classpathentry kind="src" path="gen/src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/IBM Process Server v8.5.7 JRE"/>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/com.ibm.ws.ast.st.runtime.runtimeTarget.v85.bi/wps.v857"/>
+	<classpathentry kind="lib" path="/BPMCustomLogger/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/slf4j-simple-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/slf4j-api-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/jackson-annotations-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/json-20160810.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/was_dependencies.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/jackson-core-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/httpclient-4.5.2.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/commons-lang-2.3.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/httpclient-cache-4.5.2.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/httpmime-4.5.2.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/wink-client-1.4.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/wink-1.4.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/httpcore-4.4.4.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/jackson-databind-2.4.3.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/wink-common-1.4.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="/TelcoPackUtils/lib/json-simple-1.1.1.jar"/>
+	<classpathentry exported="true" kind="src" path="/websphere_default_messaging_provider"/>
+	<classpathentry exported="true" kind="src" path="/Sterling_Library"/>
+	<classpathentry exported="true" kind="src" path="/Tibco_Lib"/>
+	<classpathentry exported="true" kind="src" path="/TP_Assurance_Extensions_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Billing_Extensions_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Common_Extensions_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Common_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_CRM_AIS_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Fulfillment_Extensions_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Message_Model_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_RMO_AIS_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_SMO_AIS_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_Supplier_Partner_AIS_Library"/>
+	<classpathentry exported="true" kind="src" path="/TP_System_View_Library"/>
+	<classpathentry exported="true" kind="src" path="/BPMCustomLogger"/>
+	<classpathentry exported="true" kind="src" path="/TelcoPackUtils"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

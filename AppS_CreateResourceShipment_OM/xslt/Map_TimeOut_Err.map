@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" targetNamespace="http://AppS_CreateResourceShipment_OM/xslt/Map_TimeOut_Err" version="8.0.4.0" xmlns:map="http://AppS_CreateResourceShipment_OM/xslt/Map_TimeOut_Err">
+    <input correlationContext="" message="{http://TPRMOAI/AIS/CreateResourceShipment}invokeFault1Msg" sharedContext="{http://AppS_CreateResourceShipment_OM}SharedContextBO" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <output correlationContext="" message="{http://TPRMOAI/AIS/CreateResourceShipment}invokeFault1Msg" sharedContext="{http://AppS_CreateResourceShipment_OM}SharedContextBO" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="io5" uri="http://www.ibm.com/websphere/sibx/smo/v6.0.1"/>
+        <namespace kind="supplement" prefix="io4" uri="http://www.ibm.com/xmlns/prod/websphere/mq/sca/6.0.0"/>
+        <namespace kind="supplement" prefix="io3" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/systemview"/>
+        <namespace kind="supplement" prefix="io2" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/common/extensions"/>
+        <namespace kind="supplement" prefix="io" uri="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+        <namespace kind="supplement" prefix="io18" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/fulfillment/extensions"/>
+        <namespace kind="supplement" prefix="io17" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/sid-v12.5"/>
+        <namespace kind="supplement" prefix="io19" uri="http://www.w3.org/2003/05/soap-envelope"/>
+        <namespace kind="supplement" prefix="io14" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/fulfillment/extension"/>
+        <namespace kind="supplement" prefix="io13" uri="http://www.w3.org/2005/08/addressing"/>
+        <namespace kind="supplement" prefix="io16" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/assurance/extension"/>
+        <namespace kind="supplement" prefix="io15" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/common/extension"/>
+        <namespace kind="supplement" prefix="io8" uri="wsdl.http://TPRMOAI/AIS/CreateResourceShipment"/>
+        <namespace kind="supplement" prefix="io10" uri="http://www.ibm.com/xmlns/prod/websphere/http/sca/6.1.0"/>
+        <namespace kind="supplement" prefix="io22" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/billing/extensions"/>
+        <namespace kind="supplement" prefix="io9" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/billing/extension"/>
+        <namespace kind="supplement" prefix="io21" uri="http://AppS_CreateResourceShipment_OM"/>
+        <namespace kind="supplement" prefix="io6" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/common"/>
+        <namespace kind="supplement" prefix="io12" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/messageview"/>
+        <namespace kind="supplement" prefix="io20" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/assurance/extensions"/>
+        <namespace kind="supplement" prefix="io7" uri="http://TPRMOAI/AIS/CreateResourceShipment"/>
+        <namespace kind="supplement" prefix="io11" uri="http://TPCMN"/>
+    </namespaces>
+    <generation engine="xslt2"/>
+    <mappingDeclaration name="Map_TimeOut_Err">
+        <input namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <output namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <move>
+            <input path="context/shared"/>
+            <output path="context/shared"/>
+        </move>
+        <move>
+            <input path="body/invokeFault1/Payload"/>
+            <output path="body/invokeFault1/Payload"/>
+        </move>
+        <move>
+            <input path="body/invokeFault1/Header/ActivityStatus_T"/>
+            <output path="body/invokeFault1/Header/ActivityStatus_T"/>
+        </move>
+        <move>
+            <input path="body/invokeFault1/Header/Timestamp"/>
+            <output path="body/invokeFault1/Header/Timestamp"/>
+        </move>
+        <move>
+            <input path="context/shared/OrderHeaderKey"/>
+            <output path="body/invokeFault1/Header/CorrelationId_T"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>

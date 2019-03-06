@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map:businessObjectMap xmlns:BOMap_InternalErr="http://AppS_CreateResourceShipment_OM" xmlns:ServiceMessageObject="smo://smo/name%3Dwsdl-primary/sharedContext%3D%257Bhttp%253A%252F%252FAppS_CreateResourceShipment_OM%257DSharedContextBO/message%3D%257Bhttp%253A%252F%252FTPRMOAI%252FAIS%252FCreateResourceShipment%257DinvokeFault1Msg/xpath%3D%252F/namespace%3DBOMap/smo.xsd" xmlns:map="http://www.ibm.com/xmlns/prod/websphere/wbiserver/map/6.0.0" targetNamespace="http://AppS_CreateResourceShipment_OM">
+  <map:name>BOMap_InternalErr</map:name>
+  <map:inputBusinessObjectVariable businessObjectRef="ServiceMessageObject:ServiceMessageObject" name="ServiceMessageObject"/>
+  <map:outputBusinessObjectVariable businessObjectRef="ServiceMessageObject:ServiceMessageObject" name="ServiceMessageObject_1"/>
+  <map:propertyMap executionOrder="1">
+    <map:move>
+      <map:input businessObjectVariableRef="ServiceMessageObject" property="context/shared"/>
+      <map:output businessObjectVariableRef="ServiceMessageObject_1" property="context/shared"/>
+    </map:move>
+  </map:propertyMap>
+  <map:propertyMap executionOrder="2">
+    <map:move>
+      <map:input businessObjectVariableRef="ServiceMessageObject" property="body/invokeFault1/Payload"/>
+      <map:output businessObjectVariableRef="ServiceMessageObject_1" property="body/invokeFault1/Payload"/>
+    </map:move>
+  </map:propertyMap>
+  <map:propertyMap executionOrder="3">
+    <map:move>
+      <map:input businessObjectVariableRef="ServiceMessageObject" property="context/shared/OrderHeaderKey"/>
+      <map:output businessObjectVariableRef="ServiceMessageObject_1" property="body/invokeFault1/Header/CorrelationId_T"/>
+    </map:move>
+  </map:propertyMap>
+  <map:propertyMap executionOrder="4">
+    <map:move>
+      <map:input businessObjectVariableRef="ServiceMessageObject" property="body/invokeFault1/Header/Timestamp"/>
+      <map:output businessObjectVariableRef="ServiceMessageObject_1" property="body/invokeFault1/Header/Timestamp"/>
+    </map:move>
+  </map:propertyMap>
+  <map:propertyMap executionOrder="5">
+    <map:move>
+      <map:input businessObjectVariableRef="ServiceMessageObject" property="body/invokeFault1/Header/ActivityStatus_T"/>
+      <map:output businessObjectVariableRef="ServiceMessageObject_1" property="body/invokeFault1/Header/ActivityStatus_T"/>
+    </map:move>
+  </map:propertyMap>
+</map:businessObjectMap>

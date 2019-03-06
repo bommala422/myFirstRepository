@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><mappingRoot xmlns="http://www.ibm.com/2008/ccl/Mapping" domainID="com.ibm.msl.mapping.xml" targetNamespace="http://AppS_CreateResourceShipment_OM/xslt/Map_RequestToBS" version="8.0.4.0" xmlns:map="http://AppS_CreateResourceShipment_OM/xslt/Map_RequestToBS">
+    <input correlationContext="" message="{http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt}CreateResourceShipmentOMSRequestMsg" sharedContext="{http://AppS_CreateResourceShipment_OM}SharedContextBO" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <output correlationContext="" message="{http://TPRMOAI/AIS/CreateResourceShipment}invokeMsg" sharedContext="{http://AppS_CreateResourceShipment_OM}SharedContextBO" smoName="wsdl-primary" transientContext="" type="smo" types="" xpath="/"/>
+    <namespaces>
+        <namespace kind="supplement" prefix="in2" uri="http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt"/>
+        <namespace kind="supplement" prefix="in3" uri="http://www.sterlingcommerce.com/documentation"/>
+        <namespace kind="supplement" prefix="io5" uri="http://www.w3.org/2005/08/addressing"/>
+        <namespace kind="supplement" prefix="io4" uri="http://www.ibm.com/xmlns/prod/websphere/http/sca/6.1.0"/>
+        <namespace kind="supplement" prefix="io3" uri="http://www.ibm.com/websphere/sibx/smo/v6.0.1"/>
+        <namespace kind="supplement" prefix="io2" uri="http://www.ibm.com/xmlns/prod/websphere/mq/sca/6.0.0"/>
+        <namespace kind="supplement" prefix="io6" uri="http://www.w3.org/2003/05/soap-envelope"/>
+        <namespace kind="supplement" prefix="io7" uri="http://AppS_CreateResourceShipment_OM"/>
+        <namespace kind="supplement" prefix="in" uri="wsdl.http://BS_CreateResourceShipment/CreateResourceShipmentOMSInt"/>
+        <namespace kind="supplement" prefix="io" uri="http://schemas.xmlsoap.org/ws/2004/08/addressing"/>
+        <namespace kind="supplement" prefix="out7" uri="http://TPCMN"/>
+        <namespace kind="supplement" prefix="out6" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/billing/extension"/>
+        <namespace kind="supplement" prefix="out9" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/fulfillment/extension"/>
+        <namespace kind="supplement" prefix="out8" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/messageview"/>
+        <namespace kind="supplement" prefix="out11" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/assurance/extension"/>
+        <namespace kind="supplement" prefix="out3" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/common"/>
+        <namespace kind="supplement" prefix="out12" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/sid-v12.5"/>
+        <namespace kind="supplement" prefix="out2" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/systemview"/>
+        <namespace kind="supplement" prefix="out5" uri="wsdl.http://TPRMOAI/AIS/CreateResourceShipment"/>
+        <namespace kind="supplement" prefix="out10" uri="http://www.ibm.com/software/issw/telecom/pack/v8.5.0/lite/businessobject/system/common/extension"/>
+        <namespace kind="supplement" prefix="out4" uri="http://TPRMOAI/AIS/CreateResourceShipment"/>
+        <namespace kind="supplement" prefix="out15" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/billing/extensions"/>
+        <namespace kind="supplement" prefix="out14" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/assurance/extensions"/>
+        <namespace kind="supplement" prefix="out13" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/fulfillment/extensions"/>
+        <namespace kind="supplement" prefix="out" uri="http://www.ibm.com/telecom/v8.5.0/businessobject/system/sid-v12.5/common/extensions"/>
+    </namespaces>
+    <generation engine="xslt2"/>
+    <mappingDeclaration name="Map_RequestToBS">
+        <input namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <output namespace="http://www.ibm.com/websphere/sibx/smo/v6.0.1" path="smo"/>
+        <move>
+            <input path="context/shared"/>
+            <output path="context/shared"/>
+        </move>
+        <foreach>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ShipmentLines/ShipmentLine"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/Resources"/>
+            <move>
+                <input path="@ItemID"/>
+                <output path="ID/ID"/>
+            </move>
+            <move>
+                <input path="@Quantity"/>
+                <output path="PhysicalResourceExtension/OrderedQuantity"/>
+            </move>
+            <move>
+                <input path="@ShipmentLineNo"/>
+                <output path="PhysicalResourceExtension/OrderlineId"/>
+            </move>
+        </foreach>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@OrderHeaderKey"/>
+            <output path="body/invoke/createResourceShipmentInput/Header/CorrelationId_T"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@SellerOrganizationCode"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/CompanyID"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@ShipmentKey"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/ShipmentKey"/>
+        </move>
+        <local>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ToAddress"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/Places"/>
+            <move>
+                <input path="@AddressLine1"/>
+                <output path="PostalAddress/addressLine1"/>
+            </move>
+            <move>
+                <input path="@AddressLine2"/>
+                <output path="PostalAddress/addressLine2"/>
+            </move>
+            <move>
+                <input path="@AddressLine3"/>
+                <output path="PostalAddress/addressLine3"/>
+            </move>
+            <move>
+                <input path="@Country"/>
+                <output path="PostalAddress/GeographicAddress/country"/>
+            </move>
+            <move>
+                <input path="@City"/>
+                <output path="PostalAddress/GeographicAddress/UrbanPropertyAddress/locality"/>
+            </move>
+            <move>
+                <input path="@ZipCode"/>
+                <output path="PostalAddress/GeographicAddress/UrbanPropertyAddress/postcode"/>
+            </move>
+        </local>
+        <local>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ToAddress"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentContact"/>
+            <move>
+                <input path="@DayPhone"/>
+                <output path="ContactNumber"/>
+            </move>
+            <move>
+                <input path="@EMailID"/>
+                <output path="EmailAddress"/>
+            </move>
+        </local>
+        <local>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ToAddress" var="ToAddress"/>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@ShipmentNo" var="ShipmentNo"/>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@ReceivingNode" var="ReceivingNode"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ID"/>
+            <function ref="concat">
+                <input path="$ToAddress/@FirstName" var="FirstName"/>
+                <input path="$ToAddress/@LastName" var="LastName"/>
+                <output path="name"/>
+                <property key="defaultDelimiter" value=" "/>
+            </function>
+            <move>
+                <input path="$ShipmentNo/."/>
+                <output path="ID"/>
+            </move>
+            <move>
+                <input path="$ReceivingNode/."/>
+                <output path="description"/>
+            </move>
+        </local>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@ShipNode"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/FromSiteId"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/@CarrierServiceCode"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/ServiceLevel"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ShipmentLines/ShipmentLine[1]/OrderLine/@ReqShipDate"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/ShipByDate"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ShipmentLines/ShipmentLine[1]/OrderLine/Extn/@ExtnRequestType"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/CollectionRequired"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ShipmentLines/ShipmentLine[1]/Order/Extn/@ExtnCustomerType"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/ShipmentDetails/Priority"/>
+        </move>
+        <move>
+            <input path="body/CreateResourceShipmentOMS/CreateResourceShipmentOMSReq/ShipmentLines/ShipmentLine[1]/Order/Extn/@ExtnCustomerOrderNo"/>
+            <output path="body/invoke/createResourceShipmentInput/Payload/ResourceShipmentExtension/PurchaseOrder"/>
+        </move>
+    </mappingDeclaration>
+</mappingRoot>
